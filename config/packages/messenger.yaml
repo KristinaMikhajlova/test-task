@@ -1,0 +1,20 @@
+framework:
+    messenger:
+        failure_transport: failed
+        transports:
+             failed:
+                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+             sum:
+                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                 options:
+                     persistent: true
+                     prefetch_count: 1
+                     exchange:
+                         name: sum_exchange
+                         type: fanout
+                     queues:
+                         sum_queue: ~
+
+        routing:
+            'App\DTO\SumMessage': sum
